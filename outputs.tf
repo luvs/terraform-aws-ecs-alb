@@ -86,22 +86,6 @@ output "lb_http_tgs_names" {
   description = "List of HTTP Target Groups Names"
   value       = aws_lb_target_group.lb_http_tgs.*.name
 }
-
-output "lb_https_tgs_ids" {
-  description = "List of HTTPS Target Groups IDs"
-  value       = aws_lb_target_group.lb_https_tgs.*.id
-}
-
-output "lb_https_tgs_arns" {
-  description = "List of HTTPS Target Groups ARNs"
-  value       = aws_lb_target_group.lb_https_tgs.*.arn
-}
-
-output "lb_https_tgs_names" {
-  description = "List of HTTPS Target Groups Names"
-  value       = aws_lb_target_group.lb_https_tgs.*.name
-}
-
 #------------------------------------------------------------------------------
 # AWS LOAD BALANCER - Listeners
 #------------------------------------------------------------------------------
