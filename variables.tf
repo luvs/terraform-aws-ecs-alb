@@ -201,3 +201,9 @@ variable "target_group_health_check_matcher" {
   type        = string
   default     = "200"
 }
+
+variable "https_cert_arn" {
+  description = "HTTPS cert arn"
+  type        = string
+  default     = ""
+}
