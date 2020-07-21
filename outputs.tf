@@ -98,3 +98,13 @@ output "lb_http_listeners_arns" {
   description = "List of HTTP Listeners ARNs"
   value       = aws_lb_listener.lb_http_listeners.*.arn
 }
+
+output "lb_https_listeners_ids" {
+  description = "List of HTTPS Listeners IDs"
+  value       = aws_lb_listener.lb_https_listeners.*.id
+}
+
+output "lb_https_listeners_arns" {
+  description = "List of HTTPS Listeners ARNs"
+  value       = aws_lb_listener.lb_https_listeners.*.arn
+}
