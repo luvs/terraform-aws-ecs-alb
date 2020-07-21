@@ -187,12 +187,12 @@ resource "aws_lb_listener" "lb_https_listeners" {
 }
 
 resource "aws_lb_listener_rule" "core" {
-  listener_arn = "${aws_lb_listener.lb_https_listeners.arn}"
+  listener_arn = aws_lb_listener.lb_https_listeners.arn[0]
   priority     = 100
 
   action {
     type             = "forward"
-    target_group_arn = "${aws_lb_target_group.core_lb_http_tgs.arn}"
+    target_group_arn = aws_lb_target_group.core_lb_http_tgs.arn[0]
   }
 
   condition {
