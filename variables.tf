@@ -89,6 +89,12 @@ variable "http_ports" {
   default     = [ 80 ]
 }
 
+variable "core_http_ports" {
+  description = "The list of ports with access to the Load Balancer through HTTP listeners"
+  type        = list(number)
+  default     = [ 80 ]
+}
+
 variable "http_ingress_cidr_blocks" {
   description = "List of CIDR blocks to allowed to access the Load Balancer through HTTP"
   type        = list(string)
