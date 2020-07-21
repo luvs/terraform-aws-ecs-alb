@@ -117,42 +117,42 @@ resource "aws_lb_target_group" "lb_http_tgs" {
   depends_on = [ aws_lb.lb ]
 }
 
-resource "aws_lb_target_group" "lb_https_tgs" {
-  count                         = var.enable_https ? length(var.https_ports) : 0
-  name                          = "${var.name_preffix}-lb-https-tg-${count.index}"
-  port                          = element(var.https_ports, count.index)
-  protocol                      = "HTTPS"
-  vpc_id                        = var.vpc_id
-  deregistration_delay          = var.deregistration_delay
-  slow_start                    = var.slow_start
-  load_balancing_algorithm_type = var.load_balancing_algorithm_type
-  dynamic "stickiness" {
-    for_each = var.stickiness == null ? [] : [var.stickiness]
-    content {
-      type            = stickiness.value.type
-      cookie_duration = stickiness.value.cookie_duration
-      enabled         = stickiness.value.enabled
-    }
-  }
-  health_check {
-    enabled             = var.target_group_health_check_enabled
-    interval            = var.target_group_health_check_interval
-    path                = var.target_group_health_check_path
-    protocol            = "HTTPS"
-    timeout             = var.target_group_health_check_timeout
-    healthy_threshold   = var.target_group_health_check_healthy_threshold
-    unhealthy_threshold = var.target_group_health_check_unhealthy_threshold
-    matcher             = var.target_group_health_check_matcher
-  }
-  target_type = "ip"
-  tags = {
-    Name = "${var.name_preffix}-lb-https-tg-${count.index}"
-  }
-  lifecycle {
-    create_before_destroy = true
-  }
-  depends_on = [ aws_lb.lb ]
-}
+# resource "aws_lb_target_group" "lb_https_tgs" {
+#   count                         = var.enable_https ? length(var.https_ports) : 0
+#   name                          = "${var.name_preffix}-lb-https-tg-${count.index}"
+#   port                          = element(var.https_ports, count.index)
+#   protocol                      = "HTTPS"
+#   vpc_id                        = var.vpc_id
+#   deregistration_delay          = var.deregistration_delay
+#   slow_start                    = var.slow_start
+#   load_balancing_algorithm_type = var.load_balancing_algorithm_type
+#   dynamic "stickiness" {
+#     for_each = var.stickiness == null ? [] : [var.stickiness]
+#     content {
+#       type            = stickiness.value.type
+#       cookie_duration = stickiness.value.cookie_duration
+#       enabled         = stickiness.value.enabled
+#     }
+#   }
+#   health_check {
+#     enabled             = var.target_group_health_check_enabled
+#     interval            = var.target_group_health_check_interval
+#     path                = var.target_group_health_check_path
+#     protocol            = "HTTPS"
+#     timeout             = var.target_group_health_check_timeout
+#     healthy_threshold   = var.target_group_health_check_healthy_threshold
+#     unhealthy_threshold = var.target_group_health_check_unhealthy_threshold
+#     matcher             = var.target_group_health_check_matcher
+#   }
+#   target_type = "ip"
+#   tags = {
+#     Name = "${var.name_preffix}-lb-https-tg-${count.index}"
+#   }
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+#   depends_on = [ aws_lb.lb ]
+# }
 
 #------------------------------------------------------------------------------
 # AWS LOAD BALANCER - Listeners
@@ -171,10 +171,10 @@ resource "aws_lb_listener" "lb_http_listeners" {
 resource "aws_lb_listener" "lb_https_listeners" {
   count             = var.enable_https ? length(var.https_ports) : 0
   load_balancer_arn = aws_lb.lb.arn
-  port              = element(aws_lb_target_group.lb_https_tgs.*.port, count.index)
-  protocol          = element(aws_lb_target_group.lb_https_tgs.*.protocol, count.index)
+  port              = element(aws_lb_target_group.lb_http_tgs.*.port, count.index)
+  protocol          = element(aws_lb_target_group.lb_http_tgs.*.protocol, count.index)
   default_action {
-    target_group_arn = element(aws_lb_target_group.lb_https_tgs.*.arn, count.index)
+    target_group_arn = element(aws_lb_target_group.lb_http_tgs.*.arn, count.index)
     type             = "forward"
   }
 }
