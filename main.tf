@@ -197,13 +197,29 @@ resource "aws_lb_listener_rule" "core" {
 
   condition {
     path_pattern {
-      values = ["/api*", "/admin*", "/monitoring*", "/webhooks*", "/widget*", "/xcomponents*", "/oauth*", "/internal*", "/web*", "/testing*", "/donor*"]
+      values = ["/api*", "/admin*", "/monitoring*", "/webhooks*", "/widget*"]
     }
   }
 
   condition {
     host_header {
       values = ["*.donate.page"]
+    }
+  }
+}
+
+resource "aws_lb_listener_rule" "core2" {
+  listener_arn = aws_lb_listener.lb_https_listeners[0].arn
+  priority     = 100
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.core_lb_http_tgs[0].arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/xcomponents*", "/oauth*", "/internal*", "/web*", "/testing*", "/donor*"]
     }
   }
 }
