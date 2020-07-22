@@ -188,7 +188,7 @@ resource "aws_lb_listener" "lb_https_listeners" {
 
 resource "aws_lb_listener_rule" "core" {
   listener_arn = aws_lb_listener.lb_https_listeners[0].arn
-  priority     = 100
+  priority     = 90
 
   action {
     type             = "forward"
