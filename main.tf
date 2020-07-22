@@ -196,8 +196,14 @@ resource "aws_lb_listener_rule" "core" {
   }
 
   condition {
+    path_pattern {
+      values = ["/api*", "/admin*", "/monitoring*", "/webhooks*", "/widget*", "/xcomponents*", "/oauth*", "/internal*", "/web*", "/testing*", "/donor*"]
+    }
+  }
+
+  condition {
     host_header {
-      values = ["dashboard.donate.page"]
+      values = ["*.donate.page"]
     }
   }
 }
