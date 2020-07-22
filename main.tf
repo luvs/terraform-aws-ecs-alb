@@ -204,7 +204,7 @@ resource "aws_lb_listener_rule" "core" {
 
 resource "aws_lb_listener_rule" "core2" {
   listener_arn = aws_lb_listener.lb_https_listeners[0].arn
-  priority     = 100
+  priority     = 99
 
   action {
     type             = "forward"
@@ -220,7 +220,7 @@ resource "aws_lb_listener_rule" "core2" {
 
 resource "aws_lb_listener_rule" "core3" {
   listener_arn = aws_lb_listener.lb_https_listeners[0].arn
-  priority     = 100
+  priority     = 98
 
   action {
     type             = "forward"
@@ -236,7 +236,7 @@ resource "aws_lb_listener_rule" "core3" {
 
 resource "aws_lb_listener_rule" "core4" {
   listener_arn = aws_lb_listener.lb_https_listeners[0].arn
-  priority     = 100
+  priority     = 97
 
   action {
     type             = "forward"
