@@ -137,7 +137,7 @@ resource "aws_lb_target_group" "core_lb_http_tgs" {
   health_check {
     enabled             = var.target_group_health_check_enabled
     interval            = var.target_group_health_check_interval
-    path                = var.target_group_health_check_path
+    path                = "/test"
     protocol            = "HTTP"
     timeout             = var.target_group_health_check_timeout
     healthy_threshold   = var.target_group_health_check_healthy_threshold
